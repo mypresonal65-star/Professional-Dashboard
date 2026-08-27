@@ -1,0 +1,14 @@
+{
+  "name": "edustream-pro-root",
+  "version": "1.0.0",
+  "description": "Private Educational Video Platform Root",
+  "main": "backend/server.js",
+  "scripts": {
+    "install-all": "cd backend && npm install",
+    "start": "node backend/server.js",
+    "setup-db": "node backend/setup-db.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
