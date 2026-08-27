@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduStream Pro – Login</title>
+  <meta name="description" content="EduStream Pro – Private educational video streaming. Login to access premium course content." />
+  
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/login.css" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="login-page">
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Floating Particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Login Container -->
+  <div class="login-container">
+    <div class="login-card">
+
+      <!-- Logo -->
+      <div class="login-logo">
+        <div class="logo-icon">🎓</div>
+        <h1 class="logo-title gradient-text">EduStream Pro</h1>
+        <p class="logo-subtitle">Premium Learning Platform · Access Restricted</p>
+      </div>
+
+      <!-- Error Message -->
+      <div class="error-msg" id="error-msg">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span id="error-text">Invalid credentials</span>
+      </div>
+
+      <!-- Login Form -->
+      <form class="login-form" id="login-form" autocomplete="off">
+        <!-- Gmail Field -->
+        <div class="input-group">
+          <label class="input-label" for="gmail-input">
+            <i class="fa-solid fa-envelope"></i> Gmail Address
+          </label>
+          <div class="input-wrapper">
+            <i class="input-icon fa-solid fa-envelope"></i>
+            <input
+              type="email"
+              id="gmail-input"
+              class="input-field"
+              placeholder="yourname@gmail.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Key Section -->
+        <div class="key-section">
+          <div class="key-section-header">
+            <span class="key-label">
+              <i class="fa-solid fa-key"></i> Access Key
+            </span>
+            <button type="button" class="btn-generate-key" id="btn-generate-key">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              Generate Key
+            </button>
+          </div>
+
+          <!-- Key Input -->
+          <div class="input-wrapper">
+            <i class="input-icon fa-solid fa-key"></i>
+            <input
+              type="text"
+              id="key-input"
+              class="input-field"
+              placeholder="XXXX-XXXX-XXXX-XXXX"
+              autocomplete="off"
+              maxlength="19"
+              style="text-transform: uppercase; letter-spacing: 2px; font-family: 'Courier New', monospace;"
+            />
+          </div>
+
+          <!-- Daily Limit Indicator -->
+          <div class="key-daily-limit">
+            <div class="limit-dots" id="limit-dots">
+              <div class="limit-dot" id="dot-1"></div>
+              <div class="limit-dot" id="dot-2"></div>
+              <div class="limit-dot" id="dot-3"></div>
+            </div>
+            <span class="limit-text" id="limit-text">3 keys available today</span>
+          </div>
+
+          <!-- Generated Key Display -->
+          <div class="key-display" id="key-display">
+            <span class="key-value" id="key-value-display">----</span>
+            <button type="button" class="btn-copy-key" id="btn-copy-key" title="Copy key">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Login Button -->
+        <button type="submit" class="btn-login" id="btn-login">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span class="btn-text">Access Dashboard</span>
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="divider" style="margin: 16px 0;">or</div>
+
+      <!-- Footer Actions -->
+      <div class="login-footer">
+        <!-- Telegram Contact -->
+        <a
+          href="https://t.me/g6803"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-telegram"
+          id="btn-telegram"
+        >
+          <i class="fa-brands fa-telegram"></i>
+          Contact Admin — @g6803
+        </a>
+
+        <!-- Admin Login -->
+        <button type="button" class="btn-admin-login" id="btn-show-admin">
+          <i class="fa-solid fa-shield-halved"></i>
+          Admin Login
+        </button>
+      </div>
+
+    </div><!-- /login-card -->
+  </div><!-- /login-container -->
+
+  <!-- Admin Login Modal -->
+  <div class="modal-overlay" id="admin-modal" style="display:none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title"><i class="fa-solid fa-shield-halved"></i> Admin Login</h2>
+        <button class="modal-close" id="btn-close-admin-modal">&times;</button>
+      </div>
+      <div class="input-group" style="margin-bottom: 16px;">
+        <label class="input-label">Admin Password</label>
+        <div class="input-wrapper">
+          <i class="input-icon fa-solid fa-lock"></i>
+          <input
+            type="password"
+            id="admin-password-input"
+            class="input-field"
+            placeholder="Enter admin password"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full" id="btn-admin-login-submit">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span class="btn-text">Login as Admin</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Page Loader -->
+  <div class="page-loader" id="page-loader">
+    <div class="loader-logo">
+      <div class="logo-icon" style="width:72px;height:72px;font-size:2rem;">🎓</div>
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

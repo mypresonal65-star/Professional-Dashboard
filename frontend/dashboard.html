@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduStream Pro – Dashboard</title>
+  <meta name="description" content="EduStream Pro Dashboard – Access your courses, live classes and study materials." />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Video.js -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.6.1/video-js.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.6.1/video.min.js" defer></script>
+
+  <!-- HLS.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.4.12/hls.min.js" defer></script>
+</head>
+<body class="dashboard-page">
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Top Navigation Bar -->
+  <nav class="topbar" id="topbar">
+    <!-- Left: Logo + Brand -->
+    <div class="topbar-left">
+      <div class="topbar-logo">🎓</div>
+      <span class="topbar-brand gradient-text">EduStream Pro</span>
+    </div>
+
+    <!-- Center: User Info -->
+    <div class="topbar-user" id="topbar-user">
+      <div class="user-avatar" id="user-avatar">U</div>
+      <div>
+        <div class="user-gmail" id="user-gmail">Loading...</div>
+        <div class="user-status">
+          <div class="status-dot"></div>
+          <span>Active</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Access Timer (top right) -->
+    <div class="access-timer" id="access-timer">
+      <span class="timer-icon">⏱️</span>
+      <div class="timer-display">
+        <span class="timer-label">Access Expires</span>
+        <span class="timer-value" id="timer-value">--:--:--</span>
+      </div>
+    </div>
+
+    <!-- Right Actions -->
+    <div class="topbar-actions">
+      <!-- YouTube Login Button -->
+      <button class="btn-yt-login" id="btn-yt-login" title="Connect YouTube for private videos">
+        <i class="fa-brands fa-youtube"></i>
+        <span id="yt-btn-text">Connect YouTube</span>
+      </button>
+
+      <!-- Logout -->
+      <button class="btn-logout" id="btn-logout" title="Logout">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Dashboard Content -->
+  <main class="dashboard-content" id="dashboard-content">
+
+    <!-- ── Live Section ─────────────────────────────── -->
+    <section class="live-section" id="live-section">
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fa-solid fa-tower-broadcast" style="color:#ef4444;"></i>
+          Live Class
+          <span class="live-badge" id="live-status-badge">● LIVE</span>
+        </div>
+      </div>
+
+      <!-- Video Player or Offline Message -->
+      <div id="live-player-container">
+        <!-- Populated by JS -->
+        <div class="live-offline-msg" id="live-offline">
+          <div class="live-offline-icon">📡</div>
+          <div class="live-offline-title">No Live Class Right Now</div>
+          <div style="font-size:0.85rem;color:var(--text-muted);">Check back later or contact admin @g6803</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Sections / Playlists ─────────────────────── -->
+    <section class="sections-container" id="sections-container">
+      <div class="sections-header">
+        <div class="section-title">
+          <i class="fa-solid fa-layer-group" style="color:var(--primary-light);"></i>
+          Study Materials
+        </div>
+
+        <!-- Global Search -->
+        <div class="global-search">
+          <i class="global-search-icon fa-solid fa-magnifying-glass"></i>
+          <input
+            type="search"
+            class="global-search-input"
+            id="global-search-input"
+            placeholder="Search playlists across all subjects..."
+          />
+        </div>
+      </div>
+
+      <!-- Sections Accordion (populated by JS) -->
+      <div id="sections-list">
+        <!-- Skeleton Loaders -->
+        <div class="skeleton" style="height:70px;border-radius:var(--radius-lg);"></div>
+        <div class="skeleton" style="height:70px;border-radius:var(--radius-lg);"></div>
+        <div class="skeleton" style="height:70px;border-radius:var(--radius-lg);"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Video Drawer (Playlist Videos) ────────────── -->
+  <div class="video-drawer-overlay" id="video-drawer-overlay" style="display:none;">
+    <div class="video-drawer" id="video-drawer">
+      <div class="video-drawer-header">
+        <div>
+          <div class="video-drawer-title" id="drawer-playlist-name">Playlist</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:2px;" id="drawer-video-count"></div>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="btn-close-drawer">
+          <i class="fa-solid fa-xmark"></i> Close
+        </button>
+      </div>
+
+      <!-- YT Auth Required Message -->
+      <div id="yt-auth-required" style="display:none;">
+        <div style="background:rgba(255,0,0,0.08);border:1px solid rgba(255,0,0,0.2);border-radius:var(--radius-md);padding:16px;text-align:center;margin-bottom:16px;">
+          <div style="font-size:1.5rem;margin-bottom:8px;">🔐</div>
+          <div style="font-weight:600;margin-bottom:4px;">YouTube Login Required</div>
+          <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:12px;">Connect your Google account to watch private videos</div>
+          <button class="btn btn-primary btn-sm" id="btn-yt-auth-from-drawer">
+            <i class="fa-brands fa-youtube"></i> Connect YouTube
+          </button>
+        </div>
+      </div>
+
+      <!-- Video Player -->
+      <div class="video-embed-container" id="drawer-video-player" style="display:none;">
+        <iframe
+          id="yt-iframe"
+          src=""
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <!-- Video List -->
+      <div class="video-list" id="drawer-video-list">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Loader -->
+  <div class="page-loader" id="page-loader">
+    <div class="loader-logo">
+      <div class="logo-icon" style="width:72px;height:72px;font-size:2rem;">🎓</div>
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
+
+  <script src="js/youtube.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

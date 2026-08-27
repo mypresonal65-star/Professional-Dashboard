@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduStream Pro – Admin Panel</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="admin-page">
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ─── Sidebar ─────────────────────────────────────── -->
+  <aside class="admin-sidebar" id="admin-sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">🎓</div>
+        <div>
+          <div class="sidebar-logo-text">EduStream Pro</div>
+          <div class="sidebar-logo-subtitle">⚡ Admin Panel</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Overview</span>
+      <button class="nav-item active" data-panel="dashboard" id="nav-dashboard">
+        <i class="nav-item-icon fa-solid fa-gauge-high"></i>
+        Dashboard
+      </button>
+
+      <span class="nav-section-label">Content</span>
+      <button class="nav-item" data-panel="sections" id="nav-sections">
+        <i class="nav-item-icon fa-solid fa-layer-group"></i>
+        Sections
+      </button>
+      <button class="nav-item" data-panel="playlists" id="nav-playlists">
+        <i class="nav-item-icon fa-solid fa-list"></i>
+        Playlists
+      </button>
+      <button class="nav-item" data-panel="live" id="nav-live">
+        <i class="nav-item-icon fa-solid fa-tower-broadcast"></i>
+        Live Stream
+      </button>
+
+      <span class="nav-section-label">Users</span>
+      <button class="nav-item" data-panel="users" id="nav-users">
+        <i class="nav-item-icon fa-solid fa-users"></i>
+        Users
+      </button>
+      <button class="nav-item" data-panel="keys" id="nav-keys">
+        <i class="nav-item-icon fa-solid fa-key"></i>
+        Access Keys
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="btn-back-site" onclick="window.location.href='/dashboard.html'">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Site
+      </button>
+    </div>
+  </aside>
+
+  <!-- ─── Main Content ───────────────────────────────── -->
+  <main class="admin-main">
+
+    <!-- Admin Topbar -->
+    <div class="admin-topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="btn btn-secondary btn-sm" id="btn-toggle-sidebar" style="display:none;">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h1 class="admin-page-title" id="admin-page-title">
+          <i class="fa-solid fa-gauge-high"></i> Dashboard
+        </h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="badge badge-success"><i class="fa-solid fa-circle"></i> Admin Active</span>
+        <button class="btn btn-secondary btn-sm" id="btn-admin-logout">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL: DASHBOARD ════════════════════════════ -->
+    <div class="admin-panel active" id="panel-dashboard">
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon purple"><i class="fa-solid fa-users"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-users">0</div>
+            <div class="stat-label">Total Users</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="fa-solid fa-satellite-dish"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-sessions">0</div>
+            <div class="stat-label">Active Sessions</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon cyan"><i class="fa-solid fa-key"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-keys">0</div>
+            <div class="stat-label">Unused Keys</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange"><i class="fa-solid fa-layer-group"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-sections">0</div>
+            <div class="stat-label">Sections</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:24px 28px;">
+        <div style="background:rgba(124,58,237,0.06);border:1px solid rgba(124,58,237,0.2);border-radius:var(--radius-lg);padding:24px;text-align:center;">
+          <div style="font-size:2rem;margin-bottom:8px;">👋</div>
+          <div style="font-family:var(--font-heading);font-size:1.1rem;font-weight:700;margin-bottom:4px;">Welcome to Admin Panel</div>
+          <div style="color:var(--text-muted);font-size:0.875rem;">Manage your content, users, and live stream from the sidebar.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL: SECTIONS ═════════════════════════════ -->
+    <div class="admin-panel" id="panel-sections">
+      <!-- Add Section Form -->
+      <div class="add-form-card">
+        <div class="add-form-title"><i class="fa-solid fa-plus"></i> Add New Section</div>
+        <div class="form-grid two-col">
+          <div class="input-group">
+            <label class="input-label">Section Name</label>
+            <input type="text" id="section-name-input" class="input-field" placeholder="e.g., Physics" />
+          </div>
+          <div class="input-group">
+            <label class="input-label">Icon (emoji)</label>
+            <input type="text" id="section-icon-input" class="input-field" placeholder="📚" maxlength="4" />
+          </div>
+        </div>
+        <button class="btn btn-primary" id="btn-add-section">
+          <i class="fa-solid fa-plus"></i> Add Section
+        </button>
+      </div>
+
+      <!-- Sections Table -->
+      <div class="panel-header">
+        <div class="panel-title"><i class="fa-solid fa-layer-group"></i> All Sections</div>
+        <button class="btn btn-secondary btn-sm" id="btn-refresh-sections">
+          <i class="fa-solid fa-rotate"></i> Refresh
+        </button>
+      </div>
+
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="sections-table">
+          <thead>
+            <tr>
+              <th>Icon</th>
+              <th>Name</th>
+              <th>Order</th>
+              <th>Playlists</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="sections-tbody">
+            <tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:30px;">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL: PLAYLISTS ════════════════════════════ -->
+    <div class="admin-panel" id="panel-playlists">
+      <!-- Add Playlist Form -->
+      <div class="add-form-card">
+        <div class="add-form-title"><i class="fa-solid fa-plus"></i> Add New Playlist</div>
+        <div class="form-grid three-col">
+          <div class="input-group">
+            <label class="input-label">Section</label>
+            <select id="playlist-section-select" class="input-field">
+              <option value="">Select Section...</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Playlist Name</label>
+            <input type="text" id="playlist-name-input" class="input-field" placeholder="e.g., Number System" />
+          </div>
+          <div class="input-group">
+            <label class="input-label">YouTube Playlist ID</label>
+            <input type="text" id="playlist-yt-id-input" class="input-field" placeholder="PLxxxxxx..." />
+          </div>
+        </div>
+        <div class="input-group" style="margin-bottom:14px;">
+          <label class="input-label">Description (optional)</label>
+          <input type="text" id="playlist-desc-input" class="input-field" placeholder="Brief description..." />
+        </div>
+        <button class="btn btn-primary" id="btn-add-playlist">
+          <i class="fa-solid fa-plus"></i> Add Playlist
+        </button>
+      </div>
+
+      <!-- Playlists Table -->
+      <div class="panel-header">
+        <div class="panel-title"><i class="fa-solid fa-list"></i> All Playlists</div>
+        <div style="display:flex;gap:8px;">
+          <select id="playlist-filter-section" class="input-field" style="width:auto;padding:8px 12px;font-size:0.8rem;">
+            <option value="">All Sections</option>
+          </select>
+          <button class="btn btn-secondary btn-sm" id="btn-refresh-playlists">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="playlists-table">
+          <thead>
+            <tr>
+              <th>Section</th>
+              <th>Name</th>
+              <th>YouTube Playlist ID</th>
+              <th>Order</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="playlists-tbody">
+            <tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:30px;">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL: LIVE STREAM ══════════════════════════ -->
+    <div class="admin-panel" id="panel-live">
+      <div class="live-config-card">
+        <div class="live-status-indicator">
+          <div class="live-dot offline" id="live-admin-dot"></div>
+          <div>
+            <div style="font-weight:700;font-size:0.95rem;" id="live-admin-status">Stream Offline</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);">Last updated: <span id="live-last-updated">–</span></div>
+          </div>
+        </div>
+
+        <div class="form-grid" style="margin-bottom:16px;">
+          <div class="input-group" style="grid-column:1/-1;">
+            <label class="input-label">HLS Stream URL (.m3u8)</label>
+            <input
+              type="url"
+              id="live-url-input"
+              class="input-field"
+              placeholder="https://example.com/live/stream.m3u8"
+            />
+          </div>
+          <div class="input-group">
+            <label class="input-label">Stream Title</label>
+            <input type="text" id="live-title-input" class="input-field" placeholder="Today's Live Class" />
+          </div>
+          <div class="input-group" style="justify-content:flex-end;">
+            <label class="input-label">Status</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="live-active-toggle" />
+              <div class="toggle-track"></div>
+              <span class="toggle-label" id="live-toggle-label">Offline</span>
+            </label>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" id="btn-save-live">
+          <i class="fa-solid fa-floppy-disk"></i> Save Live Config
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL: USERS ════════════════════════════════ -->
+    <div class="admin-panel" id="panel-users">
+      <!-- Add User -->
+      <div class="add-form-card">
+        <div class="add-form-title"><i class="fa-solid fa-user-plus"></i> Add / Update User</div>
+        <div class="form-grid two-col">
+          <div class="input-group">
+            <label class="input-label">Gmail Address</label>
+            <input type="email" id="user-gmail-input" class="input-field" placeholder="user@gmail.com" />
+          </div>
+          <div class="input-group">
+            <label class="input-label">Access Type</label>
+            <label class="toggle-switch" style="margin-top:10px;">
+              <input type="checkbox" id="user-special-toggle" />
+              <div class="toggle-track"></div>
+              <span class="toggle-label">Special Access (No Key Required)</span>
+            </label>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="btn-add-user">
+          <i class="fa-solid fa-user-plus"></i> Add/Update User
+        </button>
+      </div>
+
+      <!-- Users Table -->
+      <div class="panel-header">
+        <div class="panel-title"><i class="fa-solid fa-users"></i> All Users</div>
+        <button class="btn btn-secondary btn-sm" id="btn-refresh-users">
+          <i class="fa-solid fa-rotate"></i> Refresh
+        </button>
+      </div>
+
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Gmail</th>
+              <th>Access Type</th>
+              <th>Keys Used</th>
+              <th>Session Expires</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="users-tbody">
+            <tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:30px;">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL: KEYS ═════════════════════════════════ -->
+    <div class="admin-panel" id="panel-keys">
+      <!-- Generate Key -->
+      <div class="add-form-card">
+        <div class="add-form-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Access Key</div>
+        <div class="form-grid two-col">
+          <div class="input-group">
+            <label class="input-label">For Gmail (optional)</label>
+            <input type="email" id="key-gmail-input" class="input-field" placeholder="user@gmail.com (optional)" />
+          </div>
+          <div class="input-group">
+            <label class="input-label">Valid for (days)</label>
+            <input type="number" id="key-days-input" class="input-field" value="7" min="1" max="365" />
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <button class="btn btn-primary" id="btn-admin-gen-key">
+            <i class="fa-solid fa-key"></i> Generate Key
+          </button>
+          <!-- Generated key display -->
+          <div class="key-card" id="admin-generated-key-display" style="display:none;flex:1;">
+            <span class="key-value-admin" id="admin-generated-key-value">----</span>
+            <button class="btn btn-secondary btn-sm" id="btn-copy-admin-key">
+              <i class="fa-regular fa-copy"></i> Copy
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Keys Table -->
+      <div class="panel-header">
+        <div class="panel-title"><i class="fa-solid fa-key"></i> All Keys</div>
+        <div style="display:flex;gap:8px;">
+          <select id="key-filter" class="input-field" style="width:auto;padding:8px 12px;font-size:0.8rem;">
+            <option value="">All Keys</option>
+            <option value="unused">Unused Only</option>
+            <option value="used">Used Only</option>
+          </select>
+          <button class="btn btn-secondary btn-sm" id="btn-refresh-keys">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Gmail</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th>Expires</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="keys-tbody">
+            <tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:30px;">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main><!-- /admin-main -->
+
+  <!-- Page Loader -->
+  <div class="page-loader" id="page-loader">
+    <div class="loader-logo">
+      <div class="logo-icon" style="width:72px;height:72px;font-size:2rem;">🎓</div>
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
